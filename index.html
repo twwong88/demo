@@ -1,57 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HAS ITR 2025 — Engineering Demo</title>
-<style>
-  body { font-family: Arial, sans-serif; background: #0f1724; color: #e6f0f6; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; overflow:hidden; }
-  .card { background: #0b1220; border-radius:16px; padding:36px; max-width:800px; width:90%; position:relative; box-shadow:0 10px 30px rgba(2,6,23,0.6); overflow:hidden; }
-  h1 { font-size:2.2rem; color: #00a3ff; margin:0 0 12px; }
-  p { margin:0; color:#9aa7b2; font-size:1rem; }
-  .traffic { margin-top:24px; font-size:1.5rem; color:#00ffae; font-weight:bold; }
-  .icon-area { position:absolute; top:18px; right:18px; display:flex; gap:12px; }
-  .icon { width:50px; height:50px; background:rgba(255,255,255,0.04); border-radius:12px; display:flex; align-items:center; justify-content:center; animation: floatY 4s ease-in-out infinite; }
-  @keyframes floatY { 0% {transform:translateY(0)} 50% {transform:translateY(-10px)} 100% {transform:translateY(0)} }
-  .ticker { position:absolute; bottom:12px; left:-20%; display:flex; gap:18px; animation:ticker 12s linear infinite; }
-  @keyframes ticker { 0%{transform:translateX(-100%)} 100%{transform:translateX(120%)} }
-  .chip { padding:8px 12px; border-radius:999px; background:rgba(255,255,255,0.03); color:#9aa7b2; font-size:0.95rem; display:inline-flex; align-items:center; gap:6px; }
-</style>
-</head>
-<body>
-  <div class="card">
-    <h1>Welcome to HAS ITR 2025</h1>
-    <p>Engineering Demo Session — showcasing security, resilience, and innovation.</p>
-
-    <div class="traffic">Concurrent Sessions: <span id="traffic-count">0</span></div>
-
-    <div class="icon-area">
-      <div class="icon">⚙️</div>
-      <div class="icon">🚀</div>
-      <div class="icon">🛡️</div>
-    </div>
-
-    <div class="ticker" aria-hidden="true">
-      <div class="chip">🛡️ FortiWeb Cloud</div>
-      <div class="chip">⚙️ Engineering</div>
-      <div class="chip">🚀 Innovation</div>
-      <div class="chip">📡 Live Demo</div>
-      <div class="chip">📈 Resilience</div>
-    </div>
-  </div>
+<div class="traffic">
+    Concurrent Sessions (Locust): <span id="locust-users">0</span>
+</div>
 
 <script>
-  async function updateTraffic() {
-    try {
-      const res = await fetch('/traffic');
-      const data = await res.json();
-      document.getElementById('traffic-count').textContent = data.concurrent.toLocaleString();
-    } catch(e) {
-      console.error('Failed to fetch traffic:', e);
+    async function updateLocust() {
+        try {
+            // Replace with your Locust master’s public IP or DNS name
+            const res = await fetch('http://57.158.141.77:8089/stats/requests');
+            const data = await res.json();
+            document.getElementById('locust-users').textContent =
+                data.user_count.toLocaleString();
+        } catch (e) {
+            console.error('Failed to fetch Locust stats:', e);
+        }
     }
-  }
-
-  setInterval(updateTraffic, 1000); // update every second
+    setInterval(updateLocust, 1000); // refresh every second
 </script>
-</body>
-</html>
