@@ -1,12 +1,12 @@
 {
-  "name": "azure-waf-demo",
-  "version": "1.0.0",
-  "description": "Demo site with live traffic counter for FortiWeb WAF",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+    "name": "azure-waf-demo",
+    "version": "1.0.0",
+    "description": "Demo site showing live concurrent sessions for FortiWeb WAF",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    }
 }

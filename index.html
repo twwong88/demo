@@ -23,7 +23,7 @@
     <h1>Welcome to HAS ITR 2025</h1>
     <p>Engineering Demo Session — showcasing security, resilience, and innovation.</p>
 
-    <div class="traffic">Incoming Traffic Sessions: <span id="traffic-count">0</span></div>
+    <div class="traffic">Concurrent Sessions: <span id="traffic-count">0</span></div>
 
     <div class="icon-area">
       <div class="icon">⚙️</div>
@@ -45,11 +45,12 @@
     try {
       const res = await fetch('/traffic');
       const data = await res.json();
-      document.getElementById('traffic-count').textContent = data.count.toLocaleString();
+      document.getElementById('traffic-count').textContent = data.concurrent.toLocaleString();
     } catch(e) {
       console.error('Failed to fetch traffic:', e);
     }
   }
+
   setInterval(updateTraffic, 1000); // update every second
 </script>
 </body>
