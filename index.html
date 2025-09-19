@@ -45,7 +45,7 @@
   async function updateLocust() {
     try {
       // Replace with your Locust master’s public IP or DNS name
-      const res = await fetch('http://57.158.141.77:8089/stats/requests');
+        const res = await fetch('http://4.144.183.18:8089/stats/requests');
       const data = await res.json();
       document.getElementById('locust-users').textContent =
           data.user_count.toLocaleString();
