@@ -23,7 +23,10 @@
     <h1>Welcome to HAS ITR 2025</h1>
     <p>Engineering Demo Session — showcasing security, resilience, and innovation.</p>
 
-    <div class="traffic">Concurrent Sessions (Locust): <span id="locust-users">0</span></div>
+    <div class="traffic">
+        Concurrent Sessions (real visitors): <span id="traffic-count">0</span><br>
+        Locust Virtual Users: <span id="locust-users">0</span>
+    </div>
 
 
     <div class="icon-area">
@@ -41,20 +44,41 @@
     </div>
   </div>
 
-<script>
-  async function updateLocust() {
-    try {
-      // Replace with your Locust master’s public IP or DNS name
-        const res = await fetch('http://4.144.183.18:8089/stats/requests');
-      const data = await res.json();
-      document.getElementById('locust-users').textContent =
-          data.user_count.toLocaleString();
-    } catch (e) {
-      console.error('Failed to fetch Locust stats:', e);
-    }
-  }
-  setInterval(updateLocust, 1000); // refresh every second
-</script>
+  <script>
+      // Update real concurrent sessions from /traffic
+      async function updateTraffic() {
+          try {
+              const res = await fetch('/traffic');
+              const data = await res.json();
+              document.getElementById('traffic-count').textContent =
+                  data.concurrent.toLocaleString();
+          } catch (e) {
+              console.error('Failed to fetch /traffic:', e);
+          }
+      }
+
+      // Update Locust swarm user count from your proxy route
+      async function updateLocust() {
+          try {
+              const res = await fetch('/locust-stats');
+              const data = await res.json();
+              document.getElementById('locust-users').textContent =
+                  data.user_count.toLocaleString();
+          } catch (e) {
+              console.error('Failed to fetch /locust-stats:', e);
+          }
+      }
+
+      // Refresh every second
+      setInterval(() => {
+          updateTraffic();
+          updateLocust();
+      }, 1000);
+
+      // Initial load
+      updateTraffic();
+      updateLocust();
+  </script>
 </body>
 </html>
 
